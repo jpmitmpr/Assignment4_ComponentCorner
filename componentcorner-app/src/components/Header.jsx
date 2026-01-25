@@ -1,14 +1,12 @@
-import "./Header.css";
-
-function Header({ storeName }) {
+function Header({ cartCount }) {
   return (
-    <header className="header">
-      <h1>{storeName}</h1>
-      <nav>
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">Contact</a>
-      </nav>
+    <header>
+      <h1>ComponentCorner</h1>
+
+      <div className="cart-container">
+        🛒 <span className="cart-count">{cartCount}</span>
+      </div>
+
     </header>
   );
 }
