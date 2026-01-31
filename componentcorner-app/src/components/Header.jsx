@@ -1,13 +1,28 @@
+import { Link } from "react-router-dom";
+
 function Header({ cartCount }) {
   return (
-    <header>
-      <h1>ComponentCorner</h1>
+    <nav>
 
-      <div className="cart-container">
-        🛒 <span className="cart-count">{cartCount}</span>
-      </div>
+      <h2>My Store</h2>
 
-    </header>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+
+        <li>
+          <Link to="/products">Products</Link>
+        </li>
+
+        <li>
+          <Link to="/cart">
+            Cart ({cartCount})
+          </Link>
+        </li>
+      </ul>
+
+    </nav>
   );
 }
 

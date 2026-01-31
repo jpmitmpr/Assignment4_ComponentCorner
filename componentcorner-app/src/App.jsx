@@ -1,67 +1,78 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Header from "./components/Header";
-import ProductCard from "./components/ProductCard";
-import CartItem from "./components/CartItem";
+
+import HomePage from "./pages/HomePage";
+import ProductsPage from "./pages/ProductsPage";
+import CartPage from "./pages/CartPage";
 
 function App() {
 
-  const products = [
-    { id: 1, name: "Wireless Headphones", price: 99.99, image: "https://placehold.co/600x400", description: "Premium noise-cancelling headphones" },
-    { id: 2, name: "Smart Watch", price: 249.99, image: "https://placehold.co/600x400", description: "Fitness tracker with GPS" },
-    { id: 3, name: "Bluetooth Speaker", price: 79.99, image: "https://placehold.co/600x400", description: "Portable waterproof speaker" },
-    { id: 4, name: "Laptop Stand", price: 49.99, image: "https://placehold.co/600x400", description: "Ergonomic aluminum stand" },
-    { id: 5, name: "Webcam", price: 129.99, image: "https://placehold.co/600x400", description: "4K webcam" },
-    { id: 6, name: "Mechanical Keyboard", price: 159.99, image: "https://placehold.co/600x400", description: "RGB keyboard" }
-  ];
-
   const [cart, setCart] = useState([]);
 
-  const addToCart = (product) => {
+  const products = [
+    { id: 1, name: "Shoes", price: 60 },
+    { id: 2, name: "Hat", price: 25 },
+    { id: 3, name: "Jacket", price: 120 }
+  ];
+
+  // LOAD CART FROM LOCAL STORAGE
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem("cart"));
+    if (savedCart) {
+      setCart(savedCart);
+    }
+  }, []);
+
+  // SAVE CART TO LOCAL STORAGE
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  function addToCart(product) {
     setCart([...cart, product]);
-  };
+  }
 
-  const removeFromCart = (id) => {
+  function removeFromCart(id) {
     setCart(cart.filter(item => item.id !== id));
-  };
-
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  }
 
   return (
-    <div className="App">
+    <BrowserRouter>
 
       <Header cartCount={cart.length} />
 
-      <h1>Products</h1>
+      <Routes>
 
-      <div className="products">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onAddToCart={addToCart}
-          />
-        ))}
-      </div>
+        <Route
+          path="/"
+          element={<HomePage />}
+        />
 
-      <h2>Shopping Cart</h2>
-
-      {cart.length === 0 ? (
-        <p>Your cart is empty</p>
-      ) : (
-        <div>
-          {cart.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onRemove={removeFromCart}
+        <Route
+          path="/products"
+          element={
+            <ProductsPage
+              products={products}
+              addToCart={addToCart}
             />
-          ))}
+          }
+        />
 
-          <h3>Total: ${total.toFixed(2)}</h3>
-        </div>
-      )}
+        <Route
+          path="/cart"
+          element={
+            <CartPage
+              cart={cart}
+              removeFromCart={removeFromCart}
+            />
+          }
+        />
 
-    </div>
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 
