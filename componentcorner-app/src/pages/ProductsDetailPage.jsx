@@ -1,21 +1,20 @@
-import ProductCard from "../components/ProductCard";
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
-function ProductsPage({ products, addToCart }) {
+const ProductDetailsPage = ({ products, addToCart }) => {
+  const { id } = useParams();
+  const product = products.find((p) => p.id === parseInt(id));
+
+  if (!product) return <h2>Product not found</h2>;
+
   return (
-    <div className="products">
-      <h1>Our Products</h1>
-
-      <div className="product-grid">
-        {products.map(product => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            addToCart={addToCart}
-          />
-        ))}
-      </div>
+    <div className="product-details">
+      <h1>{product.name}</h1>
+      <p>{product.description}</p>
+      <p>Price: ${product.price}</p>
+      <button onClick={() => addToCart(product)}>Add to Cart</button>
     </div>
   );
-}
+};
 
-export default ProductsPage;
+export default ProductDetailsPage;

@@ -1,21 +1,18 @@
-function HomePage() {
+import React from 'react';
+
+const HomePage = () => {
   return (
-    <div className="home">
-      <h1>Welcome to Our Store 🛒</h1>
-
-      <p>
-        We provide high quality products at affordable prices with fast shipping.
-      </p>
-
-      <h2>Why Shop With Us?</h2>
-
-      <ul>
-        <li>✔ Fast Delivery</li>
-        <li>✔ Secure Payments</li>
-        <li>✔ Great Customer Support</li>
-      </ul>
+    <div>
+      <section className="hero">
+        <h1>Welcome to Our Store!</h1>
+        <p>Find the best products at unbeatable prices.</p>
+      </section>
+      <section className="intro">
+        <h2>Why Shop with Us?</h2>
+        <p>Quality products, fast shipping, and excellent customer support.</p>
+      </section>
     </div>
   );
-}
+};
 
 export default HomePage;

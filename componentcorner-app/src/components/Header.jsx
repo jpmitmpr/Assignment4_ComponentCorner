@@ -1,29 +1,16 @@
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Header({ cartCount }) {
+const Header = () => {
   return (
-    <nav>
-
-      <h2>My Store</h2>
-
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
-
-        <li>
-          <Link to="/cart">
-            Cart ({cartCount})
-          </Link>
-        </li>
-      </ul>
-
-    </nav>
+    <header>
+      <nav>
+        <Link to="/">Home</Link> | 
+        <Link to="/products">Products</Link> | 
+        <Link to="/cart">Cart 🛒</Link>
+      </nav>
+    </header>
   );
-}
+};
 
 export default Header;
